@@ -1,0 +1,286 @@
+.personal-info {
+  display: flex; /* Make the personal info section a flex container */
+  justify-content:space-around; /* Distribute items evenly */
+  margin-bottom: 20px; 
+}
+
+.personal-info .form-group {
+  display: flex;
+  flex-direction: row; /* Arrange items horizontally */
+  align-items:center; /* Align items vertically */
+  margin-bottom: 10px; 
+}
+
+.personal-info label {
+  margin-right: 10px; /* Add right margin to labels for spacing */
+}
+
+.personal-info input, 
+.personal-info select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1; /* Make input fields take up available space */
+}
+.report-form {
+  border: 3px solid #04a2a2;
+  background-color: white;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%; /* Adjust width as needed */
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+.report-head{
+  text-align: center;
+  color:#04a2a2;
+  font-size: 1.8rem;
+  margin-top: 0px;
+}
+.form-headings{
+  display: flex;
+  justify-content: space-evenly;
+}
+.form-headings div{
+  color:#008080;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.unit{
+  margin-left: 0;
+}
+
+.form-group {
+  display: flex;
+  color:#006666;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.form-item {
+  flex: 1; /* Distribute space evenly */
+  padding: 5px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="number"],input[type="text"]{
+  width: 100%;
+  text-align: center;
+  padding: 8px;
+  color: black;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+/* Hide the up/down arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.bttn{
+  display: block;
+  width: 5rem;
+  padding: 15px;
+  margin:auto;
+  margin-top:15px;
+  background-color: #44ada9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .bttn:hover{
+    background-color: #44ada9;
+    transform: translateY(-3px);
+    box-shadow: 0 0 10px rgba(89, 181, 182, 0.6);
+  }
+  .xmark{
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    background:#008080;
+    border-radius: 3px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .xmark span{
+    color: white;
+    font-size: 28px;
+    line-height: 45px;
+  }
+  select {
+    /* Basic styles */
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+    color: black;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .spinner-box {
+    position: fixed; /* Make it fixed positioned */
+    width: 60%;
+    top: 50%;
+    left:34%;
+    z-index: 100; /* Ensure it's on top */
+  }
+  .pulse-bubble {
+    background-color: #04a2a2;
+  }
+  .pulse-bubble:before,
+  .pulse-bubble:after{
+      position: absolute;
+      content: "";
+      left: 50px;
+      top: 0;
+      width: 50px;
+      height: 80px;
+      background:#04a2a2;
+      -moz-border-radius: 50px 50px 0 0;
+      border-radius: 50px 50px 0 0;
+      -webkit-transform: rotate(-45deg);
+         -moz-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
+           -o-transform: rotate(-45deg);
+              transform: rotate(-45deg);
+      -webkit-transform-origin: 0 100%;
+         -moz-transform-origin: 0 100%;
+          -ms-transform-origin: 0 100%;
+           -o-transform-origin: 0 100%;
+              transform-origin: 0 100%;
+  }
+  .pulse-bubble:after{
+      left: 0;
+      -webkit-transform: rotate(45deg);
+         -moz-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+           -o-transform: rotate(45deg);
+              transform: rotate(45deg);
+      -webkit-transform-origin: 100% 100%;
+         -moz-transform-origin: 100% 100%;
+          -ms-transform-origin: 100% 100%;
+           -o-transform-origin: 100% 100%;
+              transform-origin :100% 100%;
+  }
+  
+  .pulse-bubble-1 {
+      animation: pulse .4s ease 0s infinite alternate;
+  }
+  .pulse-bubble-2 {
+      animation: pulse .4s ease .2s infinite alternate;
+  }
+  .pulse-bubble-3 {
+      animation: pulse .4s ease .4s infinite alternate;
+  }
+  .pulse-bubble-4 {
+    animation: pulse .4s ease .4s infinite alternate;
+}
+.pulse-bubble-5{
+  animation: pulse .4s ease .4s infinite alternate;
+}
+.pulse-container {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mobile{
+  display: none;
+}
+.unit{
+  margin-left: 10px;
+}
+@keyframes pulse {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: .25;
+    transform: scale(.75);
+  }
+}
+@media only screen and (max-width: 870px) {
+  
+  input[type="submit"]{
+    width:10rem;
+  }
+  input[type="button"]{
+    width: 15rem;
+  }
+  .upload-area {
+    left:1.5rem;
+    top:17rem;
+  width:15rem;
+  margin: auto;
+    z-index: -1;
+  }
+  .result{
+    width:90%;
+    }
+  .logo,.slogan{
+    display: none;
+  }
+  .username-container {
+    display: none;
+  }
+  .report-form{
+    width: 90%;
+  }
+  .sidebar{
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  position:relative;
+  width: 15rem;
+  height: 100%;
+  left: -500px;
+  background-image: linear-gradient(-45deg, #04a2a2 0%, #64d1d1 100%);
+  transition: left 0.4s ease;
+}
+
+.btn.click{
+  left: 15.5rem;
+}
+.unit{
+  margin-left: 4px;
+}
+.personal-info .form-group {
+  display: flex;
+  flex-direction: column; /* Arrange items horizontally */
+  align-items:center; /* Align items vertically */
+  margin-bottom: 10px; 
+}
+.personal-info {
+  display: flex; /* Make the personal info section a flex container */
+  justify-content:space-around; /* Distribute items evenly */
+  margin-bottom: 20px; 
+  flex-direction: column; /
+}
+.form-headings div{
+  color:#008080;
+  font-size: 0.8em;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.form-item {
+  flex: 1; /* Distribute space evenly */
+  padding: 3px;
+  font-size: 0.8rem;
+}
+}

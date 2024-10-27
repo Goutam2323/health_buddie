@@ -1,0 +1,192 @@
+body{
+    background-color:#e4e9f7;
+}
+.RH{
+color:#008080;
+font-size: 1rem;
+font-weight: bold;
+font-family: 'Poppins', sans-serif;
+}
+.RV{
+color:#04a2a2;
+font-size: 0.9rem;
+font-family: 'Poppins', sans-serif;
+}
+.patient{
+    border: #008080 solid 4px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 10rem;
+    margin: 7px;
+    background-color:white;
+    z-index: 4;
+}
+.patient-list{
+    margin-top: 0.7rem;
+}
+.patient-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 25px;
+    
+}
+.rsearchBar {
+    width: 40%;
+    margin :auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* Added to horizontally center the search bar */
+    position:absolute; /* Added to make the search bar stay fixed at the top */
+    top:1.5rem;
+    right:10px;
+    z-index: 999; /* Added to ensure the search bar stays above other content */
+}
+
+ 
+  #rsearchQueryInput {
+    width: 10rem;
+    height: 2.8rem;
+    background: #f5f5f5;
+    outline: none;
+    border: none;
+    border-radius: 1.625rem;
+    padding: 0 3.5rem 0 1.5rem;
+    font-size: 1rem;
+  }
+  
+  #rsearchQuerySubmit {
+    width: 3.5rem;
+    height: 2.8rem;
+    margin-left: -3.5rem;
+    background: none;
+    border: none;
+    outline: none;
+  }
+  
+  #rsearchQuerySubmit:hover {
+    cursor: pointer;
+  }
+  .patient:hover{
+    cursor: pointer;
+    border-color: #04a2a2;
+  }
+  .report-info{
+    border: #008080 solid 4px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 80%;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color:white;
+    z-index: 4;
+  }
+  .report-info:hover{
+    cursor: pointer;
+    border-color: #04a2a2;
+  }
+  .hidden{
+    display: none;
+  }
+  .design{
+color:#008080;
+font-size: 4rem;
+font-weight: bold;
+text-align: center;
+font-family: 'Poppins', sans-serif;
+}
+.design1{
+  border: #008080 solid 8px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  width:25rem;
+  padding: 10px;
+  top: 40%;
+  margin: auto;
+  background-color: white;
+  z-index: 4;
+}
+.back {
+  width: 18rem; 
+  position:absolute; /* Added to make the search bar stay fixed at the top */
+  top:1.5rem;
+  right:5px;
+  z-index: 999; /* Added to ensure the search bar stays above other content */
+}
+.custom-icon
+ { font-size: 2rem;
+  color:#008080;
+}
+.back:hover{
+  cursor: pointer;
+}
+@media only screen and (max-width: 870px) {
+  .patient{
+    border: #008080 solid 4px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    background-color:white;
+    z-index: 4;
+}
+.design{
+  color:#008080;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  }
+  .design1{
+    border: #008080 solid 8px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    width:20rem;
+    padding: 10px;
+    top: 40%;
+    margin: auto;
+    background-color: white;
+    z-index: 4;
+  }
+  .report-info{
+   
+    margin-top: 2rem;
+  }
+  .logo,.slogan{
+    display: none;
+  }
+  .rsearchBar {
+    width: 40%;
+    margin :auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* Added to horizontally center the search bar */ /* Added to make the search bar stay fixed at the top */
+    z-index: 999; /* Added to ensure the search bar stays above other content */
+}
+.back {
+  width: 8.5rem; 
+  position:absolute; /* Added to make the search bar stay fixed at the top */
+  top:4.3rem;
+  right:0;
+  z-index: 999; /* Added to ensure the search bar stays above other content */
+}
+.dhead{
+  margin-top: -5px;
+}
+.dslogan{
+  margin-top: -5px;
+}
+.custom-icon
+ { font-size: 1rem;
+  color:#008080;
+}
+
+}

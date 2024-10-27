@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Buddy</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="diet.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo"><b>Health</b>Buddy</div>
+        <div class="slogan">"Your Partner in Health and Wellness"</div>
+        <div class="dhead"><b>Diet</b>Planner</div>
+        <div class="dslogan">"Plan customize diet"</div>    
+        <div class="username-container">
+            <div class="profile-container">
+                <div class="profile-img">
+                    <img src="https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png" alt="Profile Picture">
+                </div>
+                <div class="profile-description">
+                    <span class="user-title"><a id="user" href="signup.html">Sign up</a></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="cover">
+        <div class="bgimage"><img src="https://static.vecteezy.com/system/resources/previews/026/112/424/original/tiny-people-filling-survey-form-online-survey-concept-feedback-service-internet-surveying-questionnaire-customers-voting-modern-flat-cartoon-style-illustration-on-white-background-vector.jpg" alt="bgimage" ></div>
+        <form id="diet-plan-form" method="POST" action="/diet-plan">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Your Personalized Diet Journey Begins Here!</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Your Name</td>
+                        <td><input type="text" id="name" name="name" required></td>
+                    </tr>
+                    <tr>
+                        <td>Your Age</td>
+                        <td><input type="number" id="age" name="age" min="6" required></td>
+                    </tr>
+                    <tr>
+                        <td>Current Weight (Kg)</td>
+                        <td><input type="number" id="Weight" name="Weight" step="0.1" required></td>
+                    </tr>
+                    <tr>
+                        <td>Current Height (feet)</td>
+                        <td><input type="number" id="Height" name="Height" step="0.1" max="8" required></td>
+                    </tr>
+                    <tr>
+                        <td>Gender Identity</td>
+                        <td>
+                            <select id="gender" name="gender">
+                                <option value="None">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dietary Preferences</td>
+                        <td>
+                            <select id="dietaryType" name="dietaryType">
+                                <option value="None">Select Dietary Type</option>
+                                <option value="herbivore">Vegetarian</option>
+                                <option value="omnivore">Non-vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="other">Other (specify below)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Food Allergies</td>
+                        <td><textarea id="allergies" name="allergies" placeholder="List any food allergies"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Food Intolerances</td>
+                        <td><textarea id="intolerances" name="intolerances" placeholder="List any food intolerances"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Health Conditions or Medications</td>
+                        <td><textarea id="healthConditions" name="healthConditions" placeholder="List any health conditions or medications you're taking"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>How Active Are You?</td>
+                        <td>
+                            <select id="activityLevel" name="activityLevel">
+                                <option value="None">Select Activity Level</option>
+                                <option value="sedentary">Sedentary (little or no exercise)</option>
+                                <option value="lightly-active">Lightly Active (1-3 days of moderate exercise per week)</option>
+                                <option value="moderately-active">Moderately Active (3-5 days of moderate exercise per week)</option>
+                                <option value="very-active">Very Active (6-7 days of moderate exercise per week, or regular vigorous exercise)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>What's Your Goal?</td>
+                        <td>
+                            <select id="goal" name="goal">
+                                <option value="None">Select Goal</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="weight-gain">Weight Gain</option>
+                                <option value="maintenance">Weight Maintenance</option>
+                                <option value="other">Other (specify below)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Goal Details</td>
+                        <td><textarea id="goalDetails" name="goalDetails" placeholder="Provide more information about your goal."></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Generate Diet Plan">
+        </form>
+        </div>
+        <div id="diet-plan-results" class="result">
+            <div id="hidden-diet-plan" display="none" class="hresult"></div>
+        
+            </div>
+    </div>
+    <script src="diet.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        // Check authentication status
+        fetch('/auth/check-auth')
+            .then(response => response.json())
+            .then(data => {
+                const user = document.getElementById('user');
+                const logoutListItem = document.getElementById('logout-list-item');
+                if (data.message === 'Not authenticated') {
+                    user.textContent = 'Guest';
+                    user.href = 'signup.html';
+                } else {
+                    user.textContent = data.username;
+                    user.href = 'profile.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error checking authentication status:', error);
+            });
+    </script>
+</body>
+</html>

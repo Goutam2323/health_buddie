@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Buddy</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="Analyzer.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/c07b35bf23.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="report.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><b>Health</b>Buddy</div>
+        <div class="slogan">"Your Partner in Health and Wellness"</div>
+        <div class="dhead"><b>Report</b>Analyzer</div>
+        <div class="dslogan">"Understand your health data"</div>    
+        <div class="username-container">
+            <div class="profile-container">
+                <div class="profile-img">
+                    <img src="https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png" alt="Profile Picture">
+                </div>
+                <div class="profile-description">
+                  <span class="user-title"><a id="user" href="signup.html">Sign up</a></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="spinner-box hidden"></div>
+    <div class="menu">
+    <div class="btn">
+        <span class="fas fa-bars"></span>
+      </div>
+
+      <nav class="sidebar">
+        <div class="text">
+           Menu
+        </div>
+        <ul>
+          <li class="active"><a href="#uploadArea" >Analyze via Image</a></li>
+          <li>
+            <a href="#" class="feat-btn">Analyze via Forms
+              <span class="fas fa-caret-down first"></span>
+            </a>
+            <div class="awrapper hidden">
+              <div class="asearchBar">
+                <input id="asearchQueryInput" type="text" name="asearchQueryInput" placeholder="Search" value="" />
+                <button id="asearchQuerySubmit" type="submit" name="asearchQuerySubmit">
+                  <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#666666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                  </svg>
+                </button>
+              </div>
+            </div></li>
+            <ul class="feat-show">
+              <li>
+              <li><a href="#cbc" class="toggle-content" data-target="#cbc-content">Complete Blood Count (CBC)</a></li>
+              <li><a href="#bmp" class="toggle-content" data-target="#bmp-content">Basic Metabolic Panel (BMP)</a></li>
+              <li><a href="#lipid" class="toggle-content" data-target="#lipid-content">Lipid Panel</a></li>
+              <li><a href="#lft" class="toggle-content" data-target="#lft-content">Liver Function Tests (LFTs)</a></li>
+              <li><a href="#thyroid" class="toggle-content" data-target="#thyroid-content">Thyroid Function Tests</a></li>
+              <li><a href="#urinalysis" class="toggle-content" data-target="#urinalysis-content">Urinalysis</a></li>
+              <li><a href="#electrolyte" class="toggle-content" data-target="#electrolyte-content">Electrolyte Panel</a></li>
+              <li><a href="#iron" class="toggle-content" data-target="#iron-content">Iron Studies</a></li>
+              <li><a href="#glucose" class="toggle-content" data-target="#glucose-content">Blood Glucose Tests</a></li>   
+              <li><a href="#kidney" class="toggle-content" data-target="#kidney-content">Kidney Function Panel</a></li>   
+            </ul>
+          </li>
+
+      </nav>
+    </div>
+    <main>
+        <!-- Upload Area -->
+         
+        <div id="uploadArea" class="upload-area">
+            <!-- Header -->
+            <div class="upload-area__header">
+                <h1 class="upload-area__title">Upload your Report</h1>
+                <p class="upload-area__paragraph">
+                    Report should be an image
+                    <strong class="upload-area__tooltip">
+                        Like
+                        <span class="upload-area__tooltip-data"></span> <!-- Data Will be Comes From Js -->
+                    </strong>
+                </p>
+            </div>
+            <!-- End Header -->
+    
+            <!-- Drop Zoon -->
+            <div id="dropZoon" class="upload-area__drop-zoon drop-zoon">
+                <span class="drop-zoon__icon">
+                    <i class='bx bxs-file-image'></i>
+                </span>
+                <p class="drop-zoon__paragraph">Drop your file here or Click to browse</p>
+                <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+                <img src="" alt="Preview Image" id="previewImage" class="drop-zoon__preview-image" draggable="false">
+                <input type="file" id="fileInput" class="drop-zoon__file-input" accept="image/*">
+            </div>
+            <!-- End Drop Zoon -->
+    
+            <!-- File Details -->
+            <div id="fileDetails" class="upload-area__file-details file-details">
+                <h3 class="file-details__title">Uploaded File</h3>
+    
+                <div id="uploadedFile" class="uploaded-file">
+                    <div class="uploaded-file__icon-container">
+                        <i class='bx bxs-file-blank uploaded-file__icon'></i>
+                        <span class="uploaded-file__icon-text"></span> <!-- Data Will be Comes From Js -->
+                    </div>
+    
+                    <div id="uploadedFileInfo" class="uploaded-file__info">
+                        <p class="uploaded-file__name">Proejct 1</p>
+                        <p class="uploaded-file__counter">0%</p>
+                    </div>
+                </div>
+                <button class="button" id="insight">generate Insights</button>
+            </div>
+            <!-- End File Details -->
+        </div>
+    </main>
+        <!-- End Upload Area -->
+
+        <!-- Diet Plan Results Area -->
+        <div id="diet-plan-results" class="result hidden" >
+            <div id="hidden-diet-plan" display="none" class="hresult"></div>
+        </div>
+        <div class="report-form hidden" id="urinalysis-content">
+            <div class="xmark" data-target="#urinalysis-content">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Urinalysis</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="normal-choice">Normal Range</div>
+              </div>
+              <div class="urinalysis-values">
+                <div class="form-group">
+                  <div class="form-item">Color</div>
+                  <div class="form-item">
+                    <select id="color" name="color">
+                      <option value="Pale Yellow">Pale Yellow</option>
+                      <option value="Yellow">Yellow</option>
+                      <option value="Dark Yellow">Dark Yellow</option>
+                      <option value="Amber">Amber</option>
+                      <option value="Orange">Orange</option>
+                      <option value="Red">Red</option>
+                      <option value="Brown">Brown</option>
+                      <option value="Cloudy">Cloudy</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Clarity</div>
+                  <div class="form-item">
+                    <select id="clarity" name="clarity">
+                      <option value="Clear">Clear</option>
+                      <option value="Slightly Cloudy">Slightly Cloudy</option>
+                      <option value="Cloudy">Cloudy</option>
+                      <option value="Turbid">Turbid</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Specific Gravity</div>
+                  <div class="form-item"><input type="number" id="specific_gravity" name="specific_gravity" placeholder="Enter Specific Gravity value" step="0.001"></div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"><span class="normal-range">1.005-1.030</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">pH</div>
+                  <div class="form-item"><input type="number" id="pH" name="pH" placeholder="Enter pH value" step="0.1"></div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"><span class="normal-range">4.5-8.0</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Protein</div>
+                  <div class="form-item">
+                    <select id="protein" name="protein">
+                      <option value="Negative">Negative</option>
+                      <option value="Trace">Trace</option>
+                      <option value="1+">1+</option>
+                      <option value="2+">2+</option>
+                      <option value="3+">3+</option>
+                      <option value="4+">4+</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Glucose</div>
+                  <div class="form-item">
+                    <select id="glucose" name="glucose">
+                      <option value="Negative">Negative</option>
+                      <option value="Trace">Trace</option>
+                      <option value="1+">1+</option>
+                      <option value="2+">2+</option>
+                      <option value="3+">3+</option>
+                      <option value="4+">4+</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Ketones</div>
+                  <div class="form-item">
+                    <select id="ketones" name="ketones">
+                      <option value="Negative">Negative</option>
+                      <option value="Trace">Trace</option>
+                      <option value="Small">Small</option>
+                      <option value="Moderate">Moderate</option>
+                      <option value="Large">Large</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Blood</div>
+                  <div class="form-item">
+                    <select id="blood" name="blood">
+                      <option value="Negative">Negative</option>
+                      <option value="Trace">Trace</option>
+                      <option value="1+">1+</option>
+                      <option value="2+">2+</option>
+                      <option value="3+">3+</option>
+                      <option value="4+">4+</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Nitrite</div>
+                  <div class="form-item">
+                    <select id="nitrite" name="nitrite">
+                      <option value="Negative">Negative</option>
+                      <option value="Positive">Positive</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Leukocyte Esterase</div>
+                  <div class="form-item">
+                    <select id="leukocyte_esterase" name="leukocyte_esterase">
+                      <option value="Negative">Negative</option>
+                      <option value="Positive">Positive</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Urobilinogen</div>
+                  <div class="form-item">
+                    <select id="urobilinogen" name="urobilinogen">
+                      <option value="Negative">Negative</option>
+                      <option value="0.1 EU/dL">0.1 EU/dL</option>
+                      <option value="0.5 EU/dL">0.5 EU/dL</option>
+                      <option value="1.0 EU/dL">1.0 EU/dL</option>
+                      <option value="2.0 EU/dL">2.0 EU/dL</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Bilirubin</div>
+                  <div class="form-item">
+                    <select id="bilirubin" name="bilirubin">
+                      <option value="Negative">Negative</option>
+                      <option value="Positive">Positive</option>
+                    </select>
+                  </div>
+                  <div class="form-item"> </div>
+                  <div class="form-item"> </div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+        <div class="report-form hidden" id="lft-content">
+            <div class="xmark" data-target="#lft-content">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Liver Function Tests (LFTs)</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="units">Units</div>
+                <div class="normal">Normal Range</div>
+              </div>
+              <div class="lft-values">
+                <div class="form-group">
+                  <div class="form-item">Aspartate Aminotransferase (AST)</div>
+                  <div class="form-item"><input type="number" id="AST" name="AST" placeholder="Enter AST value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">IU/L</span></div>
+                  <div class="form-item"><span class="normal-range">8-48</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Alanine Aminotransferase (ALT)</div>
+                  <div class="form-item"><input type="number" id="ALT" name="ALT" placeholder="Enter ALT value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">IU/L</span></div>
+                  <div class="form-item"><span class="normal-range">7-55</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Alkaline Phosphatase (ALP)</div>
+                  <div class="form-item"><input type="number" id="ALP" name="ALP" placeholder="Enter ALP value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">IU/L</span></div>
+                  <div class="form-item"><span class="normal-range">44-147</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Total Bilirubin</div>
+                  <div class="form-item"><input type="number" id="total_bilirubin" name="total_bilirubin" placeholder="Enter Total Bilirubin value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">0.2-1.2</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Direct Bilirubin</div>
+                  <div class="form-item"><input type="number" id="direct_bilirubin" name="direct_bilirubin" placeholder="Enter Direct Bilirubin value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">0-0.3</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Albumin</div>
+                  <div class="form-item"><input type="number" id="albumin" name="albumin" placeholder="Enter Albumin value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">g/dL</span></div>
+                  <div class="form-item"><span class="normal-range">3.5-5.0</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Globulin</div>
+                  <div class="form-item"><input type="number" id="globulin" name="globulin" placeholder="Enter Globulin value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">g/dL</span></div>
+                  <div class="form-item"><span class="normal-range">2.3-3.5</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Gamma-Glutamyl Transferase (GGT)</div>
+                  <div class="form-item"><input type="number" id="GGT" name="GGT" placeholder="Enter GGT value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">IU/L</span></div>
+                  <div class="form-item"><span class="normal-range">Up to 55 (Male), Up to 38 (Female)</span></div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+        <div class="report-form hidden" id="lipid-content">
+            <div class="xmark" data-target="#lipid-content">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Lipid Panel</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="units">Units</div>
+                <div class="normal">Normal Range</div>
+              </div>
+              <div class="lipid-values">
+                <div class="form-group">
+                  <div class="form-item">Total Cholesterol</div>
+                  <div class="form-item"><input type="number" id="total_cholesterol" name="total_cholesterol" placeholder="Enter Total Cholesterol value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 200</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">High-Density Lipoprotein (HDL)</div>
+                  <div class="form-item"><input type="number" id="HDL" name="HDL" placeholder="Enter HDL value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">Greater than 60</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Low-Density Lipoprotein (LDL)</div>
+                  <div class="form-item"><input type="number" id="LDL" name="LDL" placeholder="Enter LDL value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 100</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Triglycerides</div>
+                  <div class="form-item"><input type="number" id="triglycerides" name="triglycerides" placeholder="Enter Triglycerides value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 150</span></div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+        <div class="report-form hidden" id="cbc-content">
+            <div class="xmark">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+                <h2 class="report-head">Complete Blood Count (CBC)</h2>
+      
+                <div class="personal-info">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Female">Others</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <div class="form-headings">
+                    <div class="test">Test</div>
+                    <div class="actual">Actual Value</div>
+                    <div class="units">Units</div>
+                    <div class="normal">Normal Range</div>
+                </div>
+                  <div class="cbc-values">
+                      <div class="form-group">
+                          <div class="form-item">White Blood Cell Count (WBC)</div>
+                          <div class="form-item"><input type="number" id="WBC" name="WBC" placeholder="Enter WBC value" step="0.1"></div>
+                          <div class="form-item"><span class="unit">x10^9/L</span></div>
+                          <div class="form-item"><span class="normal-range">Male: 4.5-11.0, Female: 4.0-10.0</span></div>
+                      </div>
+                      <div class="form-group">
+                          <div class="form-item">Red Blood Cell Count (RBC)</div>
+                          <div class="form-item"><input type="number" id="RBC" name="RBC" placeholder="Enter RBC value" step="0.1"></div>
+                          <div class="form-item"><span class="unit">x10^12/L</span></div>
+                          <div class="form-item"><span class="normal-range"> Male: 4.7-6.1, Female: 4.2-5.4</span></div> 
+                      </div>
+                      <div class="form-group">
+                          <div class="form-item">Hemoglobin (Hb)</div>
+                          <div class="form-item"><input type="number" id="Hb" name="Hb" placeholder="Enter Hb value" step="0.1"></div>
+                          <div class="form-item"><span class="unit">g/dL</span></div>
+                          <div class="form-item"><span class="normal-range"> Male: 13.5-17.5, Female: 12.0-15.5</span></div> 
+                      </div>
+                      <div class="form-group">
+                          <div class="form-item">Hematocrit (Hct)</div>
+                          <div class="form-item"><input type="number" id="Hct" name="Hct" placeholder="Enter Hct value" step="0.1"></div>
+                          <div class="form-item"><span class="unit">%</span></div>
+                          <div class="form-item"><span class="normal-range">Male: 41.5-50.4, Female: 36.1-44.3</span></div> 
+                      </div>
+                      <div class="form-group">
+                          <div class="form-item">Mean Corpuscular Volume (MCV)</div>
+                          <div class="form-item"><input type="number" id="MCV" name="MCV" placeholder="Enter MCV value" step="0.1"></div>
+                          <div class="form-item"><span class="unit">fL</span></div>
+                          <div class="form-item"><span class="normal-range">80-100 (for both)</span></div> 
+                      </div>
+                      <div class="form-group">
+                          <div class="form-item">Mean Corpuscular Hemoglobin (MCH)</div>
+                          <div class="form-item"><input type="number" id="MCH" name="MCH" placeholder="Enter MCH value" step="0.1"></div>
+                          <div class="form-item"><span class="unit">pg</span></div>
+                          <div class="form-item"><span class="normal-range">27-31 (for both)</span></div> 
+                      </div>
+                      <div class="form-group">
+                          <div class="form-item">Mean Corpuscular Hemoglobin Concentration (MCHC)</div>
+                          <div class="form-item"><input type="number" id="MCHC" name="MCHC" placeholder="Enter MCHC value" step="0.1"></div>
+                          <div class="form-item"><span class="unit">g/dL</span></div>
+                          <div class="form-item"><span class="normal-range">32-36 (for both)</span></div> 
+                      </div>
+                      <div class="form-group">
+                          <div class="form-item">Platelet Count</div>
+                          <div class="form-item"><input type="number" id="Platelet" name="Platelet" placeholder="Enter Platelet value" step="0.1"></div>
+                          <div class="form-item"><span class="unit">x10^9/L</span></div>
+                          <div class="form-item"><span class="normal-range">150-450 (for both)</span></div> 
+                      </div>
+                  </div>
+                  <button type="submit" class="bttn">Analyze</button>
+              </form>
+          </div>
+        <!-- End Diet Plan Results Area -->
+        <div class="report-form hidden" id="bmp-content">
+            <div class="xmark">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Basic Metabolic Panel (BMP)</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="units">Units</div>
+                <div class="normal">Normal Range</div>
+              </div>
+              <div class="bmp-values">
+                <div class="form-group">
+                  <div class="form-item">Glucose</div>
+                  <div class="form-item"><input type="number" id="glucose" name="glucose" placeholder="Enter Glucose value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">70-100</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Blood Urea Nitrogen (BUN)</div>
+                  <div class="form-item"><input type="number" id="BUN" name="BUN" placeholder="Enter BUN value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">6-20</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Creatinine</div>
+                  <div class="form-item"><input type="number" id="creatinine" name="creatinine" placeholder="Enter Creatinine value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">0.6-1.2 (Male), 0.5-1.1 (Female)</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Calcium</div>
+                  <div class="form-item"><input type="number" id="calcium" name="calcium" placeholder="Enter Calcium value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">8.5-10.2</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Sodium</div>
+                  <div class="form-item"><input type="number" id="sodium" name="sodium" placeholder="Enter Sodium value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mEq/L</span></div>
+                  <div class="form-item"><span class="normal-range">135-145</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Potassium</div>
+                  <div class="form-item"><input type="number" id="potassium" name="potassium" placeholder="Enter Potassium value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mEq/L</span></div>
+                  <div class="form-item"><span class="normal-range">3.5-5.1</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Chloride</div>
+                  <div class="form-item"><input type="number" id="chloride" name="chloride" placeholder="Enter Chloride value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mEq/L</span></div>
+                  <div class="form-item"><span class="normal-range">98-108</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Carbon Dioxide (CO2)</div>
+                  <div class="form-item"><input type="number" id="CO2" name="CO2" placeholder="Enter CO2 value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mEq/L</span></div>
+                  <div class="form-item"><span class="normal-range">22-30</span></div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+          <div class="report-form hidden" id="thyroid-content">
+            <div class="xmark" data-target="#thyroid-content">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Thyroid Function Tests</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="units">Units</div>
+                <div class="normal">Normal Range</div>
+              </div>
+              <div class="thyroid-values">
+                <div class="form-group">
+                  <div class="form-item">Thyroid Stimulating Hormone (TSH)</div>
+                  <div class="form-item"><input type="number" id="TSH" name="TSH" placeholder="Enter TSH value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mIU/L</span></div>
+                  <div class="form-item"><span class="normal-range">0.4-4.0</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Free Thyroxine (FT4)</div>
+                  <div class="form-item"><input type="number" id="FT4" name="FT4" placeholder="Enter FT4 value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">ng/dL</span></div>
+                  <div class="form-item"><span class="normal-range">0.8-1.8</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Free Triiodothyronine (FT3)</div>
+                  <div class="form-item"><input type="number" id="FT3" name="FT3" placeholder="Enter FT3 value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">pg/mL</span></div>
+                  <div class="form-item"><span class="normal-range">2.0-4.4</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Thyroglobulin (Tg)</div>
+                  <div class="form-item"><input type="number" id="Tg" name="Tg" placeholder="Enter Tg value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">ng/mL</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 35</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Anti-Thyroid Peroxidase (Anti-TPO)</div>
+                  <div class="form-item"><input type="number" id="Anti-TPO" name="Anti-TPO" placeholder="Enter Anti-TPO value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">IU/mL</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 35</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Anti-Thyroglobulin (Anti-Tg)</div>
+                  <div class="form-item"><input type="number" id="Anti-Tg" name="Anti-Tg" placeholder="Enter Anti-Tg value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">IU/mL</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 35</span></div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+          <div class="report-form hidden" id="electrolyte-content">
+            <div class="xmark" data-target="#electrolyte-content">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Electrolyte Panel</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="units">Units</div>
+                <div class="normal">Normal Range</div>
+              </div>
+              <div class="electrolyte-values">
+                <div class="form-group">
+                  <div class="form-item"><div class="mobile">Test:</div>Sodium</div>
+                  <div class="form-item"><div class="mobile">Actual value:</div><input type="number" id="sodium" name="sodium" placeholder="Enter Sodium value" step="0.1"></div>
+                  <div class="form-item"><div class="mobile">units:</div><span class="unit">mEq/L</span></div>
+                  <div class="form-item"><div class="mobile">Normal:</div><span class="normal-range">135-145</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Potassium</div>
+                  <div class="form-item"><input type="number" id="potassium" name="potassium" placeholder="Enter Potassium value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mEq/L</span></div>
+                  <div class="form-item"><span class="normal-range">3.5-5.1</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Chloride</div>
+                  <div class="form-item"><input type="number" id="chloride" name="chloride" placeholder="Enter Chloride value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mEq/L</span></div>
+                  <div class="form-item"><span class="normal-range">98-108</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Carbon Dioxide (CO2)</div>
+                  <div class="form-item"><input type="number" id="CO2" name="CO2" placeholder="Enter CO2 value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mEq/L</span></div>
+                  <div class="form-item"><span class="normal-range">22-30</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Calcium</div>
+                  <div class="form-item"><input type="number" id="calcium" name="calcium" placeholder="Enter Calcium value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">8.5-10.2</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Magnesium</div>
+                  <div class="form-item"><input type="number" id="magnesium" name="magnesium" placeholder="Enter Magnesium value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">1.7-2.2</span></div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+          
+          <div class="report-form hidden" id="iron-content">
+            <div class="xmark" data-target="#iron-content">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Iron Studies</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="units">Units</div>
+                <div class="normal">Normal Range</div>
+              </div>
+              <div class="iron-values">
+                <div class="form-group">
+                  <div class="form-item">Serum Iron</div>
+                  <div class="form-item"><input type="number" id="serum_iron" name="serum_iron" placeholder="Enter Serum Iron value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">µg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">Male: 60-170, Female: 50-170</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Total Iron Binding Capacity (TIBC)</div>
+                  <div class="form-item"><input type="number" id="TIBC" name="TIBC" placeholder="Enter TIBC value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">µg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">250-460</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Transferrin Saturation</div>
+                  <div class="form-item"><input type="number" id="transferrin_saturation" name="transferrin_saturation" placeholder="Enter Transferrin Saturation value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">%</span></div>
+                  <div class="form-item"><span class="normal-range">20-50</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Ferritin</div>
+                  <div class="form-item"><input type="number" id="ferritin" name="ferritin" placeholder="Enter Ferritin value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">ng/mL</span></div>
+                  <div class="form-item"><span class="normal-range">Male: 20-300, Female: 10-120</span></div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+          
+          <div class="report-form hidden" id="glucose-content">
+            <div class="xmark" data-target="#glucose-content">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Blood Glucose Tests</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="units">Units</div>
+                <div class="normal">Normal Range</div>
+              </div>
+              <div class="glucose-values">
+                <div class="form-group">
+                  <div class="form-item">Fasting Blood Glucose</div>
+                  <div class="form-item"><input type="number" id="fasting_glucose" name="fasting_glucose" placeholder="Enter Fasting Blood Glucose value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 100</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Random Blood Glucose</div>
+                  <div class="form-item"><input type="number" id="random_glucose" name="random_glucose" placeholder="Enter Random Blood Glucose value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 200</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">A1C (Glycated Hemoglobin)</div>
+                  <div class="form-item"><input type="number" id="A1C" name="A1C" placeholder="Enter A1C value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">%</span></div>
+                  <div class="form-item"><span class="normal-range">Less than 5.7</span></div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+          <div class="report-form hidden" id="kidney-content">
+            <div class="xmark" data-target="#kidney-content">
+              <span class="fa-solid fa-xmark"></span>
+            </div>
+            <form action='/upload-form-data' method="POST" class="health-report-form"> 
+              <h2 class="report-head">Kidney Function Panel</h2>
+          
+              <div class="personal-info">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age" placeholder="Enter your age" required>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+              </div>
+          
+              <div class="form-headings">
+                <div class="test">Test</div>
+                <div class="actual">Actual Value</div>
+                <div class="units">Units</div>
+                <div class="normal">Normal Range</div>
+              </div>
+              <div class="kidney-values">
+                <div class="form-group">
+                  <div class="form-item">Creatinine</div>
+                  <div class="form-item"><input type="number" id="creatinine" name="creatinine" placeholder="Enter Creatinine value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">Male: 0.6-1.2, Female: 0.5-1.1</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">Blood Urea Nitrogen (BUN)</div>
+                  <div class="form-item"><input type="number" id="BUN" name="BUN" placeholder="Enter BUN value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mg/dL</span></div>
+                  <div class="form-item"><span class="normal-range">6-20</span></div>
+                </div>
+                <div class="form-group">
+                  <div class="form-item">eGFR (Estimated Glomerular Filtration Rate)</div>
+                  <div class="form-item"><input type="number" id="eGFR" name="eGFR" placeholder="Enter eGFR value" step="0.1"></div>
+                  <div class="form-item"><span class="unit">mL/min/1.73 m2</span></div>
+                  <div class="form-item"><span class="normal-range">Greater than 90</span></div>
+                </div>
+              </div>
+              <button type="submit" class="bttn">Analyze</button>
+            </form>
+          </div>
+    <script src="Analyzer.js"></script>
+    <script>
+      // Check authentication status
+      fetch('/auth/check-auth')
+          .then(response => response.json())
+          .then(data => {
+              const user = document.getElementById('user');
+              const logoutListItem = document.getElementById('logout-list-item');
+              if (data.message === 'Not authenticated') {
+                  user.textContent = 'Guest';
+                  user.href = 'signup.html';
+              } else {
+                  user.textContent = data.username;
+                  user.href = 'profile.html';
+              }
+          })
+          .catch(error => {
+              console.error('Error checking authentication status:', error);
+          });
+  </script>
+</body>
+</html>

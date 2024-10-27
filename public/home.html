@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Buddy</title>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/c07b35bf23.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div class="logo"><b>Health</b>Buddy</div>
+        <div class="slogan">"Your Partner in Health and Wellness"</div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="diet.html">Diet</a></li>
+                <li><a href="Analyzer.html">Analyzer</a></li>
+                <li><a href="profile.html">Profiles</a></li>
+                <li class="hidden" id="logout-list-item"><a id="logout-form">Log out</a></li>
+                <li><a href="#hero">About</a></li>
+            </ul>
+        </nav>
+        <div class="searchBar">
+            <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="HealthQuest" value="" />
+            <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
+                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                    <path fill="#666666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                </svg>
+            </button>
+        </div>
+        <div class="username-container">
+            <div class="profile-container">
+                <div class="profile-img">
+                    <img src="https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png" alt="Profile Picture">
+                </div>
+                <div class="profile-description">
+                    <span class="user-title"><a id="user" href="signup.html">Sign up</a></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="hero">
+        <img src="home1.png" alt="logo Image">
+    </section>
+    <div class="response hidden"></div>
+    <section class="content" id="hero">
+        <h2>Discover the comprehensive health solutions by Health Buddy.</h2>
+        <p>Buddy offers personalized health analysis and dietary plans tailored to your needs. Learn more about how we’ve helped users worldwide achieve better health.</p>
+        <div class="cards">
+            <div class="card">
+                <h3>Medical Report Analysis</h3>
+                <p>Health Buddy provides detailed analysis of your medical reports, helping you understand your health status.</p>
+            </div>
+            <div class="card">
+                <h3>Personalized Health Advice</h3>
+                <p>Receive tailored dietary advice to improve your health.</p>
+            </div>
+            <div class="card">
+                <h3>Health Blogs</h3>
+                <p>Explore our health blogs for valuable tips and information to help you maintain a healthy lifestyle.</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 HealthBuddy. All rights reserved.</p>
+    </footer>
+    <script src="home.js"></script>
+    <script>
+        // Check authentication status
+        fetch('/auth/check-auth')
+            .then(response => response.json())
+            .then(data => {
+                const user = document.getElementById('user');
+                const logoutListItem = document.getElementById('logout-list-item');
+                if (data.message === 'Not authenticated') {
+                    user.textContent = 'Guest';
+                    user.href = 'signup.html';
+                } else {
+                    user.textContent = data.username;
+                    user.href = 'profile.html';
+                    logoutListItem.classList.remove('hidden');
+                    logoutListItem.addEventListener('click', async (event) => {
+                        event.preventDefault();
+                        try {
+                            const response = await fetch('/auth/logout', {
+                                method: 'POST'
+                            });
+                            const responseData = await response.json();
+                            alert(responseData.message); // Show alert based on server response
+                            window.location.href = '/'; // Redirect to home page after logout
+                        } catch (error) {
+                            console.error('Logout error:', error);
+                            alert('Logout failed. Please try again.'); // Show alert for any error
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error checking authentication status:', error);
+            });
+    </script>
+</body>
+</html>
