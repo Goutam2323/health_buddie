@@ -22,8 +22,7 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 const app = express();
-const port = 3001;
-
+const port = process.env.PORT || 3000;
 // Initialize Google Generative AI with your API key
 const API_KEY = process.env.API_KEY; // Replace with your actual API key
 const genAI = new GoogleGenerativeAI(API_KEY);
@@ -115,8 +114,8 @@ Instructions:
    - Focus on delivering helpful information without jargon.
    - use emojis to show case attractive answers, numbers 1., 2., etc., or bullet points to enhance clarity .
 
-2. IF the query is NOT health-related:
-   - Respond with: "Please provide me with your medical query. I'm here to help! 🩺" `;
+2. Important IF the query is NOT according to previous instruction:Then
+- Respond with: "Please provide me with your medical query. I'm here to help! 🩺" `;
     const Actual_result = await model.generateContent(A_prompt);
     const Actual_response = Actual_result.response;
     const Actual_text = Actual_response.text().trim();
