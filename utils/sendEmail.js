@@ -6,7 +6,7 @@ const sendEmail = async (options, callback) => {
       service: "gmail",
       auth: {
         user: "bishtgoutam3@gmail.com", // your Gmail address
-        pass: process.env.Email, // your Gmail password or App Password
+        pass: process.env.EMAIL, // your Gmail password or App Password
       },
     });
 
