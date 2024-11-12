@@ -124,7 +124,7 @@ Always adhere to these guidelines:
     * **Bolding and italics** to emphasize key points.
     * **Headers or short dividers** to break up long responses.
 
-**Disclaimer:** I am an AI chatbot and cannot provide medical advice.  This information is for educational purposes only and is not a substitute for professional medical consultation.  Always consult with a qualified healthcare professional for any health concerns.
+**Disclaimer:** I am an AI Healthbuddy and provide medical advice.  This information is for to give you a hint only and is not a substitute for professional medical consultation.  Always consult with a qualified healthcare professional for any health concerns.
 
 
 Query: ${query}`;
