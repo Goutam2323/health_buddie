@@ -27,7 +27,7 @@ const port = process.env.PORT || 3000;
 const API_KEY = process.env.API_KEY; // Replace with your actual API key
 const genAI = new GoogleGenerativeAI(API_KEY);
 const fileManager = new GoogleAIFileManager(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-002" });
 
 // Generate a secure random secret key for sessions
 
@@ -160,93 +160,83 @@ app.post("/diet-plan", async (req, res) => {
   } = req.body;
 
   const prompt = `Generate a diet plan for a person with the following preferences and goals:
-  Weight_in_Kg: ${Weight}
-  Height_in_feet: ${Height}
-  Dietary Type: ${dietaryType}
-  Allergies: ${allergies}
-  Intolerances: ${intolerances}
-  Health Conditions: ${healthConditions}
-  Activity Level: ${activityLevel}
-  Goal: ${goal}
-  Goal Details: ${goalDetails}
+Weight_in_Kg: ${Weight}
+Height_in_feet: ${Height}
+Dietary Type: ${dietaryType}
+Allergies: ${allergies}
+Intolerances: ${intolerances}
+Health Conditions: ${healthConditions}
+Activity Level: ${activityLevel}
+Goal: ${goal}
+Goal Details: ${goalDetails}
 
-  Please provide specific meal suggestions and ensure the plan is balanced and safe for the individual.
-  use this format for responnse:
-  Breakfast:
-  [Meal 1 ]
-  [Meal 2]
-  [Meal 3]
-  [Meal 4]
-  [Meal 5]
+Please provide a detailed diet plan meals for One week in the following format. Make sure each section ends with :** and includes meal descriptions:
 
-  Lunch:
-  [Meal 1]
-  [Meal 2]
-  [Meal 3]
-  [Meal 4]
-  [Meal 5]
+Breakfast:**
+Meal 1: [Detailed meal description]
+Meal 2: [Detailed meal description]
+Meal 3: [Detailed meal description]
+Meal 4: [Detailed meal description]
+Meal 5: [Detailed meal description]
 
-  Dinner:
-  [Meal 1]
-  [Meal 2]
-  [Meal 3]
-  [Meal 4]
-  [Meal 5]
+Lunch:**
+Meal 1: [Detailed meal description]
+Meal 2: [Detailed meal description]
+Meal 3: [Detailed meal description]
+Meal 4: [Detailed meal description]
+Meal 5: [Detailed meal description]
 
-  Snacks:
-  [Snack 1]
-  [Snack 2]
-  [Snack 3]
-  [Snack 4]
-  [Snack 5]
+Dinner:**
+Meal 1: [Detailed meal description]
+Meal 2: [Detailed meal description]
+Meal 3: [Detailed meal description]
+Meal 4: [Detailed meal description]
+Meal 5: [Detailed meal description]
 
-  Hydration:
-  [Hydration Information]
-  [Drink 1]
-  [Drink 2]
-  [Drink 3]
-  ...
+Snacks:**
+Snack 1: [Detailed snack description]
+Snack 2: [Detailed snack description]
+Snack 3: [Detailed snack description]
+Snack 4: [Detailed snack description]
+Snack 5: [Detailed snack description]
 
-  Macros:
-  [Protein information]
-  [Carbohydrate information]
-  [Fat information]
+Hydration:**
+Drink 1: [Detailed hydration information]
+Drink 2: [Detailed hydration information]
+Drink 3: [Detailed hydration information]
 
-  Important Notes:
-  [Note 1]
-  [Note 2]
-  ...
-  example:
-  Breakfast:
+Macros:**
+Protein: [Protein information]
+Carbohydrates: [Carbohydrate information]
+Fats: [Fat information]
 
-  Meal 1: Oatmeal with berries and a sprinkle of nuts (1/2 cup rolled oats, 1/2 cup berries, 1/4 cup nuts)
+Important Notes:**
+Note 1: [Detailed note]
+Note 2: [Detailed note]
 
-  Meal 2: 2 boiled eggs with a slice of whole-wheat toast and avocado (2 eggs, 1 slice whole-wheat toast, 1/4 avocado)
+Example:
+Breakfast:**
+Meal 1: Oatmeal with berries and nuts (1/2 cup rolled oats, 1/2 cup berries, 1/4 cup nuts)
+Meal 2: 2 boiled eggs with a slice of whole-grain toast and avocado (2 eggs, 1 slice whole-grain toast, 1/4 avocado)
+Meal 3: Greek yogurt with honey and granola (1 cup Greek yogurt, 1/4 cup granola, 1 tsp honey)
+Meal 4: Smoothie with spinach, banana, and protein powder (1 cup spinach, 1 banana, 1 scoop protein powder, 1/2 cup almond milk)
+Meal 5: Whole-grain pancakes with peanut butter and banana slices (2 pancakes, 1 tbsp peanut butter, 1/2 banana)
 
-  Meal 3: Greek yogurt with granola and fruit (1 cup Greek yogurt, 1/4 cup granola, 1/2 cup fruit)
+Ensure the response strictly follows this format with section headers ending in :** and clear meal descriptions.
 
-  Meal 4: Smoothie with spinach, banana, and protein powder (1 cup spinach, 1 banana, 1 scoop protein powder, 1/2 cup unsweetened almond milk)
-
-  Lunch:
-
-  Meal 1: Salad with grilled chicken or fish and a vinaigrette dressing (1 cup mixed greens, 4 oz grilled chicken/fish, 1 tbsp vinaigrette dressing)
-
-  Meal 2: Lentil soup with a whole-wheat roll (1 cup lentil soup, 1 whole-wheat roll)
-
-  Meal 3: Leftovers from dinner (ensure portion size is appropriate for lunch)
-  also respond as given example give 5 meals for break fast lunch and dinner
   `;
 
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const dietPlanText = await response.text(); // Parse the response into a structured object
+    console.log(dietPlanText);
     const structuredDietPlan = {};
     let currentSection = "";
     const lines = dietPlanText.split("\n");
     lines.forEach((line) => {
       if (line.trim().endsWith(":**")) {
-        currentSection = line.trim().slice(2, -2);
+        currentSection = line.trim().slice(0, -2);
         structuredDietPlan[currentSection] = [];
       } else if (currentSection) {
         // Remove ALL "*" characters from the line
@@ -304,7 +294,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
       {
         text: `if the image is not a medical report then generate "My duty is to only analyze medical reports."
            else You are an intelligent assistant that analyzes reports and extracts specific personal information to use in a detailed analysis. Analyze the health report and provide a summary of the findings, formatted with subheadings. Include the normal range for each attribute based on the patient's age and gender.adjust the normal range according to your  health knowlwdge based on the patient's age and gender. For each test, list the attributes, their actual values, according to that normal range, categorize them as Healthy, Dietary Attention, or Medical Attention. If a category is Dietary Attention or Medical Attention, provide the reason including why it is a problem and possible causes.
-
+ note:Please follow this exact format in your response:
            Example Output:
            ## Personal Information:
            Name: Extracted Name
@@ -473,7 +463,7 @@ app.post("/upload-form-data", async (req, res) => {
     prompt.push({
       text: `if some attributes does not have actual value than assume that it has normal value for that value according to its age and gender and start analyze
          else You are an intelligent assistant that analyzes reports and extracts specific personal information to use in a detailed analysis. Analyze the health report and provide a summary of the findings, formatted with subheadings. Include the normal range for each attribute based on the patient's age and gender.adjust the normal range according to your  health knowlwdge based on the patient's age and gender. For each test, list the attributes, their actual values, according to that normal range, categorize them as Healthy, Dietary Attention, or Medical Attention. If a category is Dietary Attention or Medical Attention, provide the reason including why it is a problem and possible causes.
-
+ note:Please follow this exact format in your response:
          Example Output:
          ## Personal Information:
          Name: Extracted Name
