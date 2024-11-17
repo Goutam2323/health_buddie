@@ -222,6 +222,7 @@ Meal 3: Greek yogurt with honey and granola (1 cup Greek yogurt, 1/4 cup granola
 Meal 4: Smoothie with spinach, banana, and protein powder (1 cup spinach, 1 banana, 1 scoop protein powder, 1/2 cup almond milk)
 Meal 5: Whole-grain pancakes with peanut butter and banana slices (2 pancakes, 1 tbsp peanut butter, 1/2 banana)
 
+Provide 5 or more meals optins for each like Breakfast ,Lunch , dinner , Snacks.
 Ensure the response strictly follows this format with section headers ending in :** and clear meal descriptions.
 
   `;
@@ -322,7 +323,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
            * Reason: Systolic blood pressure is elevated. Elevated blood pressure can increase the risk of heart disease and stroke.
 
            ... (Continue with other tests and attributes)
-
+   
            ## Summary:
            This summary should highlight the main findings, particularly any attributes that fall under Dietary Attention or Medical Attention categories, and recommend consulting a healthcare professional if necessary.
          `,
